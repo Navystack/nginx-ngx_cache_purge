@@ -16,12 +16,13 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
         libpcre3-dev \
         unzip uuid-dev && \
     mkdir -p /opt/build-stage
-
+    
 WORKDIR /opt/build-stage
+
 RUN git clone https://github.com/nginx-modules/ngx_cache_purge.git && \
     cd ngx_cache_purge && \
-    git checkout a84b0f3f082025dec737a537a9a443bdd6d6af9d
-WORKDIR /opt/build-stage
+    git checkout a84b0f3f082025dec737a537a9a443bdd6d6af9d && \
+
 RUN wget https://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz
 RUN tar zxvf nginx-${NGINX_VERSION}.tar.gz
 WORKDIR nginx-${NGINX_VERSION}
