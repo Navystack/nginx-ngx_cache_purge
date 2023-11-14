@@ -1,8 +1,7 @@
 ARG NGINX_VERSION=1.25.3
-ARG MODULE_VERSION="2.5.2"
+ARG MODULE_VERSION=2.5.2
 
 FROM nginx:${NGINX_VERSION} as builder
-
 RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
 	--mount=type=cache,target=/var/lib/apt,sharing=locked \
         apt-get update && apt-get install -y \
@@ -19,12 +18,11 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     mkdir -p /opt/build-stage
 WORKDIR /opt/build-stage
 RUN wget https://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz
-RUN wget https://github.com/nginx-modules/ngx_cache_purge/archive/refs/tags/2.5.2.tar.gz
-
-RUN tar zxvf 2.5.2.tar.gz
+RUN wget https://github.com/nginx-modules/ngx_cache_purge/archive/refs/tags/${MODULE_VERSION}.tar.gz
+RUN tar xfv ${MODULE_VERSION}.tar.gz
 RUN tar zxvf nginx-${NGINX_VERSION}.tar.gz
 WORKDIR nginx-${NGINX_VERSION}
-RUN ./configure --with-compat --add-dynamic-module=../ngx_cache_purge-2.5.2/ && \
+RUN ./configure --with-compat --add-dynamic-module=../ngx_cache_purge-${MODULE_VERSION}/ && \
     make modules
 
 FROM nginx:${NGINX_VERSION} as final
