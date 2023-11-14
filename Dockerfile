@@ -21,7 +21,7 @@ WORKDIR /opt/build-stage
 
 RUN git clone https://github.com/nginx-modules/ngx_cache_purge.git && \
     cd ngx_cache_purge && \
-    git checkout a84b0f3f082025dec737a537a9a443bdd6d6af9d
+    git checkout a84b0f3f082025dec737a537a9a443bdd6d6af9d #2.5.2
 
 RUN wget https://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz
 RUN tar zxvf nginx-${NGINX_VERSION}.tar.gz
