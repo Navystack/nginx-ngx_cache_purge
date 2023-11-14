@@ -19,7 +19,7 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
 WORKDIR /opt/build-stage
 RUN wget https://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz
 RUN wget https://github.com/nginx-modules/ngx_cache_purge/archive/refs/tags/${module_version}.tar.gz
-RUN tar xfv $module_version.tar.gz
+RUN tar xfv ${module_version}.tar.gz
 RUN tar zxvf nginx-${NGINX_VERSION}.tar.gz
 WORKDIR nginx-${NGINX_VERSION}
 RUN ./configure --with-compat --add-dynamic-module=../ngx_cache_purge-$module_version/ && \
