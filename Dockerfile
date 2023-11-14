@@ -22,7 +22,7 @@ RUN wget https://github.com/nginx-modules/ngx_cache_purge/archive/refs/tags/${mo
 RUN tar xfv ${module_version}.tar.gz
 RUN tar zxvf nginx-${NGINX_VERSION}.tar.gz
 WORKDIR nginx-${NGINX_VERSION}
-RUN ./configure --with-compat --add-dynamic-module=../ngx_cache_purge-$module_version/ && \
+RUN ./configure --with-compat --add-dynamic-module=../ngx_cache_purge-${module_version}/ && \
     make modules
 
 FROM nginx:${NGINX_VERSION} as final
