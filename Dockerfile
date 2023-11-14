@@ -1,8 +1,7 @@
 ARG NGINX_VERSION=1.25.3
-FROM nginx:${NGINX_VERSION} as builder
 ARG module_version=2.5.2
-ARG TARGETARCH
-ARG PSOL=jammy
+
+FROM nginx:${NGINX_VERSION} as builder
 RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
 	--mount=type=cache,target=/var/lib/apt,sharing=locked \
         apt-get update && apt-get install -y \
@@ -17,14 +16,11 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
         libpcre3-dev \
         unzip uuid-dev && \
     mkdir -p /opt/build-stage
-
 WORKDIR /opt/build-stage
-
 RUN wget https://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz
 RUN wget https://github.com/nginx-modules/ngx_cache_purge/archive/refs/tags/${module_version}.tar.gz
 RUN tar xfv $module_version.tar.gz
 RUN tar zxvf nginx-${NGINX_VERSION}.tar.gz
-
 WORKDIR nginx-${NGINX_VERSION}
 RUN ./configure --with-compat --add-dynamic-module=../ngx_cache_purge-$module_version/ && \
     make modules
