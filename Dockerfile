@@ -2,8 +2,9 @@ ARG NGINX_VERSION=1.25.3
 ARG MODULE_VERSION=2.5.2
 
 FROM nginx:${NGINX_VERSION} as builder
-RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
-	--mount=type=cache,target=/var/lib/apt,sharing=locked \
+RUN     \
+        --mount=type=cache,target=/var/cache/apt,sharing=locked \
+        --mount=type=cache,target=/var/lib/apt,sharing=locked \
         apt-get update && apt-get install -y \
         wget \
         tar \
